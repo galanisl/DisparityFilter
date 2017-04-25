@@ -1,0 +1,16 @@
+Package: DisparityFilter
+Type: Package
+Title: Disparity filter for complex undirected weighted networks
+Version: 0.9
+Date: 2017-04-21
+Author: Gregorio Alanis-Lobato
+Maintainer: Gregorio Alanis-Lobato <galanisl@uni-mainz.de>
+Description: Tools for the analysis, visualisation and filtering of complex undirected weighted networks.
+License: MIT + file LICENSE
+Depends: R (>= 3.1), igraph (>= 1.0), ggplot2 (>= 2.2)
+Imports: scales (>= 0.4.1)
+Suggests: knitr, rmarkdown
+LazyData: true
+VignetteBuilder: knitr
+BugReports: https://github.com/galanisl/DisparityFilter/issues
+RoxygenNote: 6.0.1
