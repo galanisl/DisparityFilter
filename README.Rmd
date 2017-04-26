@@ -90,19 +90,19 @@ Finally, based on the previous data frame, we can carry out a visual analysis of
 p <- plot_disparity_filter_analysis(disp.analysis = analysis)
 ```
 
-The following plot shows the remaining fraction of nodes as a function of the remaining fraction of links as different significance levels are applied to the network. In addition, it shows the fractions resulting from the application of a global filter:
+The following plot shows the remaining fraction of nodes in the extracted backbone of `air` ($N_{bb}/N_{tot}$) as a function of the remaining fraction of links ($L_{bb}/L_{tot}$) as different significance levels are applied to the network. In addition, it shows the fractions resulting from the application of a global filter:
 
 ```{r}
 p$LvsN
 ```
 
-In a similar fashion, the following plot shows the remaining fraction of nodes as a function of the remaining fraction of total weight:
+In a similar fashion, the following plot shows the remaining fraction of nodes as a function of the remaining fraction of total weight ($W_{bb}/W_{tot}$):
 
 ```{r}
 p$WvsN
 ```
 
-The dashed red lines in the above plots correspond to the signifance level that maximises the number of remaining nodes in the network and minimises the average node degree [@world_trade].
+The dashed red lines in the above plots correspond to the significance level that maximises the number of remaining nodes in the network and minimises the average node degree [@world_trade]. Note how the disparity filter manages to retain as many nodes and as much weight as possible, whereas a global filter removes a high fraction of nodes and weight even for the less stringent cutoffs.
 
 # How to cite
 

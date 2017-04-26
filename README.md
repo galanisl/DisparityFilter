@@ -16,13 +16,10 @@ Nevertheless, one can take advantage of the above-mentioned heterogeneities to f
 If the strength of node *i* is *s*<sub>*i*</sub> = ∑<sub>*j*</sub>*w*<sub>*ij*</sub>, then the normalised weight of the edges linking *i* with its neighbours is *ω*<sub>*ij*</sub> = *w*<sub>*ij*</sub>/*s*<sub>*i*</sub> and ∑<sub>*j*</sub>*ω*<sub>*ij*</sub> = 1. Note that this normalisation happens at the level of each node, thus *ω*<sub>*ij*</sub> can be different from *ω*<sub>*ji*</sub>. One can now compare these normalised weights with the ones for node *i* in the null model, which represent random normalised weights that also sum up to 1. Given this null model, the probability of observing a particular normalised weight *x* touching a node with degree *k* is given by a beta distribution with shape parameters 1 and *k* − 1:
 
 *p*(*x*)=(*k* − 1)(1 − *x*)<sup>*k* − 2</sup>
-
-Salient edges, according to the disparity filter<sup>4</sup>, are thus those whose normalised weight satisfies the relation:
+ Salient edges, according to the disparity filter<sup>4</sup>, are thus those whose normalised weight satisfies the relation:
 
 1 − (*k* − 1)∫<sub>0</sub><sup>*ω*<sub>*ij*</sub></sup>(1 − *x*)<sup>*k* − 2</sup>*dx* &lt; *α*
-
-
-In other words, relevant edges have weights that are statistically different from what is expected by chance at the significance level *α*. Since *ω*<sub>*ij*</sub> can be different from *ω*<sub>*ji*</sub>, weights can be significant for node *i* but not for *j* and vice versa. The disparity filter keeps edge *i**j* if it turns out to be relevant to either node. It is also worth noting that the beta distribution requires its shape parameters to be &gt;0, which means that nodes of degree 1 should be treated separately. With this package, the user can choose to always keep them or keep them only if their edge is significant to the node at the other end.
+ In other words, relevant edges have weights that are statistically different from what is expected by chance at the significance level *α*. Since *ω*<sub>*ij*</sub> can be different from *ω*<sub>*ji*</sub>, weights can be significant for node *i* but not for *j* and vice versa. The disparity filter keeps edge *ij* if it turns out to be relevant to either node. It is also worth noting that the beta distribution requires its shape parameters to be &gt;0, which means that nodes of degree 1 should be treated separately. With this package, the user can choose to always keep them or keep them only if their edge is significant to the node at the other end.
 
 Package `DisparityFilter` is an implementation of the above-described identification of salient edges for complex undirected weighted networks, represented as `igraph` objects. It also allows for the visual analysis of the topological characteristics of networks filtered at different significance levels. What's more, it provides tools for the computation of node disparities<sup>4</sup>, defined as *Υ*<sub>*i*</sub>(*k*)=*k*∑<sub>*j*</sub>*ω*<sub>*ij*</sub><sup>2</sup> for a node *i* with degree *k*. Under perfect homogeneity, when all edges incident to *i* contribute equally to its strength, *Υ*<sub>*i*</sub>(*k*)=1 independently of *k*, while under perfect heterogeneity, when just one edge carries the whole strength, *Υ*<sub>*i*</sub>(*k*)=*k*.
 
@@ -90,7 +87,7 @@ Finally, based on the previous data frame, we can carry out a visual analysis of
 p <- plot_disparity_filter_analysis(disp.analysis = analysis)
 ```
 
-The following plot shows the remaining fraction of nodes as a function of the remaining fraction of links as different significance levels are applied to the network. In addition, it shows the fractions resulting from the application of a global filter:
+The following plot shows the remaining fraction of nodes in the extracted backbone of `air` (*N*<sub>*bb*</sub>/*N*<sub>*tot*</sub>) as a function of the remaining fraction of links (*L*<sub>*bb*</sub>/*L*<sub>*tot*</sub>) as different significance levels are applied to the network. In addition, it shows the fractions resulting from the application of a global filter:
 
 ``` r
 p$LvsN
@@ -98,7 +95,7 @@ p$LvsN
 
 ![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-In a similar fashion, the following plot shows the remaining fraction of nodes as a function of the remaining fraction of total weight:
+In a similar fashion, the following plot shows the remaining fraction of nodes as a function of the remaining fraction of total weight (*W*<sub>*bb*</sub>/*W*<sub>*tot*</sub>):
 
 ``` r
 p$WvsN
@@ -106,7 +103,7 @@ p$WvsN
 
 ![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
-The dashed red lines in the above plots correspond to the signifance level that maximises the number of remaining nodes in the network and minimises the average node degree<sup>5</sup>.
+The dashed red lines in the above plots correspond to the significance level that maximises the number of remaining nodes in the network and minimises the average node degree<sup>5</sup>. Note how the disparity filter manages to retain as many nodes and as much weight as possible, whereas a global filter removes a high fraction of nodes and weight even for the less stringent cutoffs.
 
 How to cite
 ===========
