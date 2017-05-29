@@ -103,11 +103,11 @@ plot_degree_vs_disparity <- function(net, node.disp){
     coord_cartesian(xlim = c(1, max(degree(net))), ylim = c(1, max(degree(net)))) +
     scale_x_log10(
       breaks = scales::trans_breaks("log10", function(x) 10^x),
-      labels = scales::trans_format("log10", scales::math_format(10^.x))
+      labels = scales::trans_format("log10", scales::math_format())
     ) +
     scale_y_log10(
       breaks = scales::trans_breaks("log10", function(x) 10^x),
-      labels = scales::trans_format("log10", scales::math_format(10^.x))
+      labels = scales::trans_format("log10", scales::math_format())
     ) + annotation_logticks() + labs(x = "Node degree", y = "Node disparity") + theme_bw() +
     theme(panel.grid.minor = element_blank())
   
@@ -185,7 +185,7 @@ get_edge_disparity_pvals <- function(net, deg.one.pval = 1){
 #' 
 #' @param net igraph; The undirected weighted network to which the disparity filter was applied.
 #' @param disparity.pval numeric; The vector of edge p-values obtained with function \code{get_edge_disparity_pvals} for network \code{net}.
-#' @param step numeric; The size of the step for the sequence of values between the maximum and minimum edge p-values.
+#' @param breaks integer; The length of the sequence of values between the maximum and minimum edge p-values.
 #' 
 #' @return Data frame with the following columns:
 #' \item{threshold}{The different p-value thresholds considered in the analysis.}
@@ -208,14 +208,15 @@ get_edge_disparity_pvals <- function(net, deg.one.pval = 1){
 #' # Get disparity p-values for the edges of the included US Airports network
 #' edge.pvals <- get_edge_disparity_pvals(net = air)
 #' # Analyse the topology of the networks resulting from the application of different disparity filters
-#' analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, step = 0.01)
+#' analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
 #' 
 #' @export
 #' @import igraph
 #' 
-analyse_disparity_filter <- function(net, disparity.pval, step = 0.01){
-  disparity.cuts <- seq(from = 1, to = 0, by = -step)
-  global.cuts <- seq(from = min(E(net)$weight), to = max(E(net)$weight), length.out = length(disparity.cuts))
+analyse_disparity_filter <- function(net, disparity.pval, breaks = 100){
+  disparity.cuts <- seq(from = 1, to = 0, length.out = breaks)
+  #The weight breaks are logarithmically spaced
+  global.cuts <- exp(log(10) * seq(log10(min(E(net)$weight)), log10(max(E(net)$weight)), length.out = breaks))
   
   remaining <- data.frame(threshold = c(disparity.cuts, global.cuts), 
                           N = numeric(length = 2*length(disparity.cuts)), L = numeric(length = 2*length(disparity.cuts)), 
@@ -278,7 +279,7 @@ analyse_disparity_filter <- function(net, disparity.pval, step = 0.01){
 #' # Get disparity p-values for the edges of the included US Airports network
 #' edge.pvals <- get_edge_disparity_pvals(net = air)
 #' # Analyse the topology of the networks resulting from the application of different disparity filters
-#' analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, step = 0.01)
+#' analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
 #' # Plot the results of the analysis
 #' p <- plot_disparity_filter_analysis(disp.analysis = analysis)
 #' 

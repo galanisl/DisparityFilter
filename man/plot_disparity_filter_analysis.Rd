@@ -29,7 +29,7 @@ All three plots indicate the final situation of the network for the recommended 
 # Get disparity p-values for the edges of the included US Airports network
 edge.pvals <- get_edge_disparity_pvals(net = air)
 # Analyse the topology of the networks resulting from the application of different disparity filters
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, step = 0.01)
+analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
 # Plot the results of the analysis
 p <- plot_disparity_filter_analysis(disp.analysis = analysis)
 

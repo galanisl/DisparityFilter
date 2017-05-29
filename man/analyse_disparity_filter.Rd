@@ -4,14 +4,14 @@
 \alias{analyse_disparity_filter}
 \title{Topological analysis of the disparity filter}
 \usage{
-analyse_disparity_filter(net, disparity.pval, step = 0.01)
+analyse_disparity_filter(net, disparity.pval, breaks = 100)
 }
 \arguments{
 \item{net}{igraph; The undirected weighted network to which the disparity filter was applied.}
 
 \item{disparity.pval}{numeric; The vector of edge p-values obtained with function \code{get_edge_disparity_pvals} for network \code{net}.}
 
-\item{step}{numeric; The size of the step for the sequence of values between the maximum and minimum edge p-values.}
+\item{breaks}{integer; The length of the sequence of values between the maximum and minimum edge p-values.}
 }
 \value{
 Data frame with the following columns:
@@ -35,7 +35,7 @@ In addition, it recommends a disparity p-value to filter the network, keeping as
 # Get disparity p-values for the edges of the included US Airports network
 edge.pvals <- get_edge_disparity_pvals(net = air)
 # Analyse the topology of the networks resulting from the application of different disparity filters
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, step = 0.01)
+analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
 
 }
 \references{
