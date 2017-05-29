@@ -80,7 +80,7 @@ edge.pvals <- get_edge_disparity_pvals(net = air)
 We can now analyse the topology of the networks resulting from the application of different disparity filters:
 
 ``` r
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, step = 0.01)
+analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
 ```
 
 Finally, based on the previous data frame, we can carry out a visual analysis of the resulting network topologies:
