@@ -9,26 +9,81 @@ csl: "nature.csl"
 link-citations: false
 ---
 
-Tools for the analysis, visualisation and filtering of complex undirected weighted networks.
+Tools for the analysis, visualisation and filtering of complex undirected 
+weighted networks.
 
 # Introduction
 
-Complex systems can be represented as networks or graphs in which system components are abstracted as nodes and their interactions as edges connecting them. In addition, the strength or intensity of such interactions can be abstracted by an edge weight. For example, in an air-transportation network, the weight of an edge can be the number of yearly non-stop flights between two airports. In an online social network, on the other hand, the edge weight can be the number of messages shared by two friends.
+Complex systems can be represented as networks or graphs in which system 
+components are abstracted as nodes and their interactions as edges connecting 
+them. In addition, the strength or intensity of such interactions can be 
+abstracted by an edge weight. For example, in an air-transportation network, 
+the weight of an edge can be the number of yearly non-stop flights between two 
+airports. In an online social network, on the other hand, the edge weight can be 
+the number of messages shared by two friends.
 
-Considering edge weights in complex networks is very important, as they convey the dynamics of information flowing through the network structure [@architecture], as well as the importance or reliability of edges [@hippie_v2]. As a result, the study of weighted networks is crucial to understand the formation, evolution and dynamics of complex systems. However, this kind of analyses has been hampered by the heterogeneity characterising the degree and weight distributions of weighted networks [@architecture; @geom_weights]. This heterogeneity can also be present at the local level, where only a few of the edges touching a node carry most of its strength (i.e. the total weight of the edges in which it takes part) [@disparity; @world_trade]. This feature
-implies the lack of a characteristic scale and any global filter (i.e. removal of edges with weights below or above a certain cutoff) would overlook the information present above or below the arbitrary cutoff scale [@disparity].
+Considering edge weights in complex networks is very important, as they convey 
+the dynamics of information flowing through the network 
+structure [@architecture], as well as the importance or reliability of 
+edges [@hippie_v2]. As a result, the study of weighted networks is crucial to 
+understand the formation, evolution and dynamics of complex systems. However, 
+this kind of analyses has been hampered by the heterogeneity characterising the 
+degree and weight distributions of weighted 
+networks [@architecture; @geom_weights]. This heterogeneity can also be present
+at the local level, where only a few of the edges touching a node carry most of 
+its strength (i.e. the total weight of the edges in which it takes 
+part) [@disparity; @world_trade]. This feature implies the lack of a 
+characteristic scale and any global filter (i.e. removal of edges with weights
+below or above a certain cutoff) would overlook the information present above or
+below the arbitrary cutoff scale [@disparity].
 
-Nevertheless, one can take advantage of the above-mentioned heterogeneities to filter out irrelevant edges and preserve a subnetwork comprised of the most salient connections between nodes [@world_trade]. To that end, Serrano *et al.* proposed a filtering method, **the disparity filter**, to extract the relevant backbone from a weighted network and, at the same time, retain most of its nodes, total weight, global connectedness, its small-world property, heterogeneous degree distribution and clustering [@disparity; @world_trade]. This filter preserves the edges whose weight represents a statistically significant deviation from a null model. In the null, the normalised weights of the edges incident to a node of degree $k$ are the result of a random assignment from a uniform distribution [@disparity].
+Nevertheless, one can take advantage of the above-mentioned heterogeneities to 
+filter out irrelevant edges and preserve a subnetwork comprised of the most 
+salient connections between nodes [@world_trade]. To that end, Serrano *et al.* 
+proposed a filtering method, **the disparity filter**, to extract the relevant 
+backbone from a weighted network and, at the same time, retain most of its 
+nodes, total weight, global connectedness, its small-world property, 
+heterogeneous degree distribution and clustering [@disparity; @world_trade]. 
+This filter preserves the edges whose weight represents a statistically 
+significant deviation from a null model. In the null, the normalised weights of 
+the edges incident to a node of degree $k$ are the result of a random assignment 
+from a uniform distribution [@disparity].
 
-If the strength of node $i$ is $s_i = \sum_j w_{ij}$, then the normalised weight of the edges linking $i$ with its neighbours is $\omega_{ij} = w_{ij}/s_i$ and $\sum_j \omega_{ij} = 1$. Note that this normalisation happens at the level of each node, thus $\omega_{ij}$ can be different from $\omega_{ji}$. One can now compare these normalised weights with the ones for node $i$ in the null model, which represent random normalised weights that also sum up to 1. Given this null model, the probability of observing a particular normalised weight $x$ touching a node with degree $k$ is given by a beta distribution with shape parameters $1$ and $k-1$:
+If the strength of node $i$ is $s_i = \sum_j w_{ij}$, then the normalised weight 
+of the edges linking $i$ with its neighbours is $\omega_{ij} = w_{ij}/s_i$ and 
+$\sum_j \omega_{ij} = 1$. Note that this normalisation happens at the level of 
+each node, thus $\omega_{ij}$ can be different from $\omega_{ji}$. One can now 
+compare these normalised weights with the ones for node $i$ in the null model, 
+which represent random normalised weights that also sum up to 1. Given this null 
+model, the probability of observing a particular normalised weight $x$ touching 
+a node with degree $k$ is given by a beta distribution with shape parameters 
+$1$ and $k-1$:
 
 $$p(x) = (k - 1)(1 - x)^{k - 2}$$
-Salient edges, according to the disparity filter [@disparity], are thus those whose normalised weight satisfies the relation:
+Salient edges, according to the disparity filter [@disparity], are thus those 
+whose normalised weight satisfies the relation:
 
 $$1 - (k - 1)\int_0^{\omega_{ij}}(1- x)^{k - 2}dx < \alpha$$
-In other words, relevant edges have weights that are statistically different from what is expected by chance at the significance level $\alpha$. Since $\omega_{ij}$ can be different from $\omega_{ji}$, weights can be significant for node $i$ but not for $j$ and vice versa. The disparity filter keeps edge $ij$ if it turns out to be relevant to either node. It is also worth noting that the beta distribution requires its shape parameters to be $> 0$, which means that nodes of degree $1$ should be treated separately. With this package, the user can choose to always keep them or keep them only if their edge is significant to the node at the other end.
+In other words, relevant edges have weights that are statistically different 
+from what is expected by chance at the significance level $\alpha$. Since 
+$\omega_{ij}$ can be different from $\omega_{ji}$, weights can be significant 
+for node $i$ but not for $j$ and vice versa. The disparity filter keeps edge 
+$ij$ if it turns out to be relevant to either node. It is also worth noting that
+the beta distribution requires its shape parameters to be $> 0$, which means 
+that nodes of degree $1$ should be treated separately. With this package, the 
+user can choose to always keep them or keep them only if their edge is 
+significant to the node at the other end.
 
-Package `DisparityFilter` is an implementation of the above-described identification of salient edges for complex undirected weighted networks, represented as `igraph` objects. It also allows for the visual analysis of the topological characteristics of networks filtered at different significance levels. What's more, it provides tools for the computation of node disparities [@disparity], defined as $\Upsilon_i(k) = k\sum_j \omega_{ij}^2$ for a node $i$ with degree $k$. Under perfect homogeneity, when all edges incident to $i$ contribute equally to its strength, $\Upsilon_i(k) = 1$ independently of $k$, while under perfect heterogeneity, when just one edge carries the whole strength, $\Upsilon_i(k) = k$.
+Package `DisparityFilter` is an implementation of the above-described 
+identification of salient edges for complex undirected weighted networks, 
+represented as `igraph` objects. It also allows for the visual analysis of the 
+topological characteristics of networks filtered at different significance 
+levels. What's more, it provides tools for the computation of node 
+disparities [@disparity], defined as $\Upsilon_i(k) = k\sum_j \omega_{ij}^2$ for 
+a node $i$ with degree $k$. Under perfect homogeneity, when all edges incident 
+to $i$ contribute equally to its strength, $\Upsilon_i(k) = 1$ independently of 
+$k$, while under perfect heterogeneity, when just one edge carries the whole 
+strength, $\Upsilon_i(k) = k$.
 
 # Installation
 
@@ -58,56 +113,78 @@ To start using `DisparityFilter`, load the package:
 library("DisparityFilter")
 ```
 
-Let's now use the US air-transportation network included with `DisparityFilter`, analyse its node disparities and apply the disparity filter (for more details about this network type `?air` in R). Node disparities can be computed as follows:
+Let's now use the US air-transportation network included with `DisparityFilter`, 
+analyse its node disparities and apply the disparity filter (for more details 
+about this network type `?air` in R). Node disparities can be computed as 
+follows:
 
 ```{r}
 disp <- get_node_disparity(net = air)
 ```
 
-The relation between node degrees and node disparities can then be visualised with:
+The relation between node degrees and node disparities can then be visualised 
+with:
 
 ```{r}
-plot_degree_vs_disparity(net = air, node.disp = disp)
+plot_degree_vs_disparity(net = air, node_disp = disp)
 ```
 
-The above figure shows the disparity measure for individual nodes of the US airport network. Blue dashed lines represent perfect homogeneity and heterogeneity, the area below the red line represents the average plus two standard deviations of disparities given by the null model.
+The above figure shows the disparity measure for individual nodes of the US 
+airport network. Blue dashed lines represent perfect homogeneity and 
+heterogeneity, the area below the red line represents the average plus two 
+standard deviations of disparities given by the null model.
 
-Let's now apply the disparity filter to the network to obtain the p-values associated to each edge:
+Let's now apply the disparity filter to the network to obtain the p-values 
+associated to each edge:
 
 ```{r}
-edge.pvals <- get_edge_disparity_pvals(net = air)
+air_with_pvals <- get_edge_disparity_pvals(net = air)
 ```
 
-We can now analyse the topology of the networks resulting from the application of different disparity filters:
+We can now analyse the topology of the networks resulting from the application 
+of different disparity filters:
 
 ```{r}
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
+analysis <- analyse_disparity_filter(net = air_with_pvals, breaks = 100)
 ```
 
-Finally, based on the previous data frame, we can carry out a visual analysis of the resulting network topologies:
+Finally, based on the previous data frame, we can carry out a visual analysis of
+the resulting network topologies:
 
 ```{r}
-p <- plot_disparity_filter_analysis(disp.analysis = analysis)
+p <- plot_disparity_filter_analysis(disp_analysis = analysis)
 ```
 
-The following plot shows the remaining fraction of nodes in the extracted backbone of `air` ($N_{bb}/N_{tot}$) as a function of the remaining fraction of links ($L_{bb}/L_{tot}$) as different significance levels are applied to the network. In addition, it shows the fractions resulting from the application of a global filter:
+The following plot shows the remaining fraction of nodes in the extracted 
+backbone of `air` ($N_{bb}/N_{tot}$) as a function of the remaining fraction of 
+links ($L_{bb}/L_{tot}$) as different significance levels are applied to the 
+network. In addition, it shows the fractions resulting from the application of a 
+global filter:
 
 ```{r}
 p$LvsN
 ```
 
-In a similar fashion, the following plot shows the remaining fraction of nodes as a function of the remaining fraction of total weight ($W_{bb}/W_{tot}$):
+In a similar fashion, the following plot shows the remaining fraction of nodes 
+as a function of the remaining fraction of total weight ($W_{bb}/W_{tot}$):
 
 ```{r}
 p$WvsN
 ```
 
-The dashed red lines in the above plots correspond to the significance level that maximises the number of remaining nodes in the network and minimises the average node degree [@world_trade]. Note how the disparity filter manages to retain as many nodes and as much weight as possible, whereas a global filter removes a high fraction of nodes and weight even for the less stringent cutoffs.
+The dashed red lines in the above plots correspond to the significance level 
+that maximises the number of remaining nodes in the network and minimises the 
+average node degree [@world_trade]. Note how the disparity filter manages to 
+retain as many nodes and as much weight as possible, whereas a global filter 
+removes a high fraction of nodes and weight even for the less stringent cutoffs.
 
 # How to cite
 
-If you find this package useful, please cite the following publication:
+If you find this package useful, please cite the following papers:
 
-- Serrano M. A., Boguñá, M. & Vespignani, A. Extracting the multiscale backbone of complex weighted networks. *PNAS* **6**(16) 6483-6488 (2009) [See paper](http://www.pnas.org/content/106/16/6483.full)
+- Serrano M. A., Boguñá, M. & Vespignani, A. Extracting the multiscale backbone 
+of complex weighted networks. *PNAS* **6**(16) 6483-6488 (2009) [See paper](http://www.pnas.org/content/106/16/6483.full)
+- Alanis-Lobato, G. & Andrade-Navarro, M. A reliable and unbiased human protein 
+network with the disparity filter. *bioRxiv* 10.1101/207761 (2017) [See paper](https://doi.org/10.1101/207761)
 
 # References

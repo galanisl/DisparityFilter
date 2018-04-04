@@ -4,30 +4,34 @@
 \alias{plot_degree_vs_disparity}
 \title{Visualise node disparities as a function of node degree}
 \usage{
-plot_degree_vs_disparity(net, node.disp)
+plot_degree_vs_disparity(net, node_disp)
 }
 \arguments{
 \item{net}{igraph; An undirected weighted network.}
 
-\item{node.disp}{numeric; Numeric vector of length \code{vcount(net)} with the disparity measure of each node in the network.}
+\item{node_disp}{numeric; Numeric vector of length \code{vcount(net)} with 
+the disparity measure of each node in the network.}
 }
 \value{
 A ggplot comparing node disparities as a function of node degree.
 }
 \description{
-Given an undirected weighted network and node disparities precomputed with function \code{get_node_disparity}, 
+Given an undirected weighted network and node disparities precomputed with 
+function \code{get_node_disparity}, 
 generates a ggplot comparing node disparities as a function of node degree.
-Reference lines for null disparities, perfect node homogeneity and perfect node heterogeneity are also shown.
+Reference lines for null disparities, perfect node homogeneity and perfect 
+node heterogeneity are also shown.
 }
 \examples{
 # Compute the disparity of the nodes in the included US Airports network
 disp <- get_node_disparity(net = air)
 # Plot degree vs disparities
-p <- plot_degree_vs_disparity(net = air, node.disp = disp)
+p <- plot_degree_vs_disparity(net = air, node_disp = disp)
 
 }
 \references{
-Serrano, M. A. et al. (2009) Extracting the multiscale backbone of complex weighted networks. \emph{PNAS} 106(16).
+Serrano, M. A. et al. (2009) Extracting the multiscale backbone 
+of complex weighted networks. \emph{PNAS} 106(16).
 }
 \author{
 Gregorio Alanis-Lobato \email{galanisl@uni-mainz.de}

@@ -64,29 +64,29 @@ disp <- get_node_disparity(net = air)
 The relation between node degrees and node disparities can then be visualised with:
 
 ``` r
-plot_degree_vs_disparity(net = air, node.disp = disp)
+plot_degree_vs_disparity(net = air, node_disp = disp)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
 
 The above figure shows the disparity measure for individual nodes of the US airport network. Blue dashed lines represent perfect homogeneity and heterogeneity, the area below the red line represents the average plus two standard deviations of disparities given by the null model.
 
 Let's now apply the disparity filter to the network to obtain the p-values associated to each edge:
 
 ``` r
-edge.pvals <- get_edge_disparity_pvals(net = air)
+air_with_pvals <- get_edge_disparity_pvals(net = air)
 ```
 
 We can now analyse the topology of the networks resulting from the application of different disparity filters:
 
 ``` r
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
+analysis <- analyse_disparity_filter(net = air_with_pvals, breaks = 100)
 ```
 
 Finally, based on the previous data frame, we can carry out a visual analysis of the resulting network topologies:
 
 ``` r
-p <- plot_disparity_filter_analysis(disp.analysis = analysis)
+p <- plot_disparity_filter_analysis(disp_analysis = analysis)
 ```
 
 The following plot shows the remaining fraction of nodes in the extracted backbone of `air` (*N*<sub>*bb*</sub>/*N*<sub>*tot*</sub>) as a function of the remaining fraction of links (*L*<sub>*bb*</sub>/*L*<sub>*tot*</sub>) as different significance levels are applied to the network. In addition, it shows the fractions resulting from the application of a global filter:
@@ -95,7 +95,7 @@ The following plot shows the remaining fraction of nodes in the extracted backbo
 p$LvsN
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
 
 In a similar fashion, the following plot shows the remaining fraction of nodes as a function of the remaining fraction of total weight (*W*<sub>*bb*</sub>/*W*<sub>*tot*</sub>):
 
@@ -103,16 +103,17 @@ In a similar fashion, the following plot shows the remaining fraction of nodes a
 p$WvsN
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](README_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
 
 The dashed red lines in the above plots correspond to the significance level that maximises the number of remaining nodes in the network and minimises the average node degree<sup>5</sup>. Note how the disparity filter manages to retain as many nodes and as much weight as possible, whereas a global filter removes a high fraction of nodes and weight even for the less stringent cutoffs.
 
 How to cite
 ===========
 
-If you find this package useful, please cite the following publication:
+If you find this package useful, please cite the following papers:
 
 -   Serrano M. A., Boguñá, M. & Vespignani, A. Extracting the multiscale backbone of complex weighted networks. *PNAS* **6**(16) 6483-6488 (2009) [See paper](http://www.pnas.org/content/106/16/6483.full)
+-   Alanis-Lobato, G. & Andrade-Navarro, M. A reliable and unbiased human protein network with the disparity filter. *bioRxiv* 10.1101/207761 (2017) [See paper](https://doi.org/10.1101/207761)
 
 References
 ==========

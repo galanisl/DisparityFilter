@@ -11,19 +11,25 @@ get_node_null_disparity(degrees)
 }
 \value{
 List with the following elements:
-\item{mu}{Numeric vector with the null average disparities for the given degrees.}
-\item{sd}{Numeric vector with the null standard deviation of disparities for the given degrees.}
+\item{mu}{Numeric vector with the null average disparities for the given 
+degrees.}
+\item{sd}{Numeric vector with the null standard deviation of disparities for 
+the given degrees.}
 }
 \description{
-Given a degree sequence, computes the average and standard deviation of the disparities for the null corresponding to each degree.
+Given a degree sequence, computes the average and standard deviation of the 
+disparities for the null corresponding to each degree.
 }
 \examples{
-# Compute the null disparities for the spectrum of node degrees of the included US Airports network
-null.disp <- get_node_null_disparity(degrees = seq(from = 1, to = max(degree(air)), by = 1))
+# Compute the null disparities for the spectrum of node degrees of the 
+# included US Airports network
+null_disp <- get_node_null_disparity(degrees = seq(from = 1, 
+to = max(degree(air)), by = 1))
 
 }
 \references{
-Serrano, M. A. et al. (2009) Extracting the multiscale backbone of complex weighted networks. \emph{PNAS} 106(16).
+Serrano, M. A. et al. (2009) Extracting the multiscale backbone 
+of complex weighted networks. \emph{PNAS} 106(16).
 }
 \author{
 Gregorio Alanis-Lobato \email{galanisl@uni-mainz.de}

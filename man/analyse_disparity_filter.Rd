@@ -4,44 +4,55 @@
 \alias{analyse_disparity_filter}
 \title{Topological analysis of the disparity filter}
 \usage{
-analyse_disparity_filter(net, disparity.pval, breaks = 100)
+analyse_disparity_filter(net, breaks = 100)
 }
 \arguments{
-\item{net}{igraph; The undirected weighted network to which the disparity filter was applied.}
+\item{net}{igraph; The undirected weighted network to which the disparity 
+filter was applied. It must contain a \code{pval} edge attribute.}
 
-\item{disparity.pval}{numeric; The vector of edge p-values obtained with function \code{get_edge_disparity_pvals} for network \code{net}.}
-
-\item{breaks}{integer; The length of the sequence of values between the maximum and minimum edge p-values.}
+\item{breaks}{integer; The length of the sequence of values between the 
+maximum and minimum edge p-values.}
 }
 \value{
 Data frame with the following columns:
-\item{threshold}{The different p-value thresholds considered in the analysis.}
+\item{threshold}{The different p-value thresholds considered in the 
+analysis.}
 \item{N}{The remaining fraction of nodes at each threshold.}
 \item{L}{The remaining fraction of links at each threshold.}
 \item{W}{The remaining fraction of the total weight at each threshold.}
-\item{LCC.tot}{Fraction of nodes from the original network in the largest connected component of the filtered network.}
-\item{LCC.bb}{Fraction of nodes from the filtered network in the largest connected component of the filtered network.}
+\item{LCC_tot}{Fraction of nodes from the original network in the largest 
+connected component of the filtered network.}
+\item{LCC_bb}{Fraction of nodes from the filtered network in the largest 
+connected component of the filtered network.}
 \item{cc}{Clustering coefficient of the filtered network at each threshold.}
-\item{recommended}{TRUE if the threshold is the recommended one to filter the network, FALSE otherwise.}
-\item{filter}{Whether the entry of the data frame corresponds to the Disparity or the Global filter.}
+\item{recommended}{TRUE if the threshold is the recommended one to filter 
+the network, FALSE otherwise.}
+\item{filter}{Whether the entry of the data frame corresponds to the 
+Disparity or the Global filter.}
 }
 \description{
-After disparity p-values have been obtained, applies different p-value thresholds to the given network and computes the fraction of 
-remaining nodes, edges and size of the largest connected component from the perspective of the original network.
+After disparity p-values have been obtained, applies different p-value 
+thresholds to the given network and computes the fraction of remaining nodes, 
+edges and size of the largest connected component from the perspective of the 
+original network.
 It does the same for a filter based on weights (global filter).
-In addition, it recommends a disparity p-value to filter the network, keeping as many nodes as possible and the most significant edges.
+In addition, it recommends a disparity p-value to filter the network, keeping 
+as many nodes as possible and the most significant edges.
 }
 \examples{
 # Get disparity p-values for the edges of the included US Airports network
-edge.pvals <- get_edge_disparity_pvals(net = air)
-# Analyse the topology of the networks resulting from the application of different disparity filters
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
+air_with_pval <- get_edge_disparity_pvals(net = air)
+# Analyse the topology of the networks resulting from the application of 
+# different disparity filters
+analysis <- analyse_disparity_filter(net = air_with_pval, breaks = 100)
 
 }
 \references{
-Serrano, M. A. et al. (2009) Extracting the multiscale backbone of complex weighted networks. \emph{PNAS} 106(16).
+Serrano, M. A. et al. (2009) Extracting the multiscale backbone 
+of complex weighted networks. \emph{PNAS} 106(16).
 
-Garcia-Perez, G. et al. (2016) The hidden hyperbolic geometry of international trade: World Trade Atlas 1870-2013. 
+Garcia-Perez, G. et al. (2016) The hidden hyperbolic geometry of 
+international trade: World Trade Atlas 1870-2013. 
 \emph{Scientific Reports} 6(33441).
 }
 \author{

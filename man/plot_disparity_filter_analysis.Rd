@@ -2,42 +2,56 @@
 % Please edit documentation in R/disparity_filter.R
 \name{plot_disparity_filter_analysis}
 \alias{plot_disparity_filter_analysis}
-\title{Visual analysis of the disparity filter applied to an undirected weighted network}
+\title{Visual analysis of the disparity filter applied to an undirected weighted 
+network}
 \usage{
-plot_disparity_filter_analysis(disp.analysis)
+plot_disparity_filter_analysis(disp_analysis)
 }
 \arguments{
-\item{disp.analysis}{data frame; The data frame resulting from the application of function \code{analyse_disparity_filter}.}
+\item{disp_analysis}{data frame; The data frame resulting from the 
+application of function \code{analyse_disparity_filter}.}
 }
 \value{
 A list of five ggplots:
-\item{LvsN}{The remaining fraction of nodes as a function of the remaining fraction of links.}
-\item{WvsN}{The remaining fraction of nodes as a function of the remaining fraction of total weight.}
-\item{AvsLCC.tot}{Fraction of nodes from the original network in the LCC of the filtered network as a function of different p-value thresholds.}
-\item{AvsLCC.bb}{Fraction of nodes from the filtered network in the LCC of the filtered network as a function of different p-value thresholds.}
-\item{AvsCC}{Clustering coefficient as a function of different p-value thresholds.}
+\item{LvsN}{The remaining fraction of nodes as a function of the remaining 
+fraction of links.}
+\item{WvsN}{The remaining fraction of nodes as a function of the remaining 
+fraction of total weight.}
+\item{AvsLCC_tot}{Fraction of nodes from the original network in the LCC of 
+the filtered network as a function of different p-value thresholds.}
+\item{AvsLCC_bb}{Fraction of nodes from the filtered network in the LCC of 
+the filtered network as a function of different p-value thresholds.}
+\item{AvsCC}{Clustering coefficient as a function of different p-value 
+thresholds.}
 }
 \description{
-After the application of function \code{analyse_disparity_filter} to an undirected weighted network,
-it generates three ggplots showing how the remaining fraction of nodes changes as a function of the
-remaining fraction of links and total weight as more stringent filters are applied to the network.
-The third plot shows how the fraction of nodes in the largest connected component of the network 
-changes as a function of the different filters applied.
-All three plots indicate the final situation of the network for the recommended disparity filter.
+After the application of function \code{analyse_disparity_filter} to an 
+undirected weighted network, it generates three ggplots showing how the 
+remaining fraction of nodes changes as a function of the remaining fraction 
+of links and total weight as more stringent filters are applied to the 
+network.
+The third plot shows how the fraction of nodes in the largest connected 
+component of the network changes as a function of the different filters 
+applied.
+All three plots indicate the final situation of the network for the 
+recommended disparity filter.
 }
 \examples{
 # Get disparity p-values for the edges of the included US Airports network
-edge.pvals <- get_edge_disparity_pvals(net = air)
-# Analyse the topology of the networks resulting from the application of different disparity filters
-analysis <- analyse_disparity_filter(net = air, disparity.pval = edge.pvals, breaks = 100)
+air_with_pval <- get_edge_disparity_pvals(net = air)
+# Analyse the topology of the networks resulting from the application of 
+# different disparity filters
+analysis <- analyse_disparity_filter(net = air_with_pval, breaks = 100)
 # Plot the results of the analysis
-p <- plot_disparity_filter_analysis(disp.analysis = analysis)
+p <- plot_disparity_filter_analysis(disp_analysis = analysis)
 
 }
 \references{
-Serrano, M. A. et al. (2009) Extracting the multiscale backbone of complex weighted networks. \emph{PNAS} 106(16).
+Serrano, M. A. et al. (2009) Extracting the multiscale backbone 
+of complex weighted networks. \emph{PNAS} 106(16).
 
-Garcia-Perez, G. et al. (2016) The hidden hyperbolic geometry of international trade: World Trade Atlas 1870-2013. 
+Garcia-Perez, G. et al. (2016) The hidden hyperbolic geometry of 
+international trade: World Trade Atlas 1870-2013. 
 \emph{Scientific Reports} 6(33441).
 }
 \author{
